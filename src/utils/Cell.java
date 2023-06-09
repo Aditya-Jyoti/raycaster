@@ -3,6 +3,7 @@ package utils;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 
 public class Cell extends JComponent {
@@ -10,17 +11,18 @@ public class Cell extends JComponent {
     private int yIdx;
     private int size;
     private int val;
-    private Color colour;
+    private boolean player;
+    private Color colour = new Color(66, 66, 66);
 
-    public Cell(int xIdx, int yIdx, int size, int val, Color colour) {
+    public Cell(int xIdx, int yIdx, int size, int val) {
         this.xIdx = xIdx;
         this.yIdx = yIdx;
         this.size = size;
-        this.colour = colour;
+        this.val = val;
 
-        this.setBounds(xIdx * size, yIdx * size, size, size);
+        this.setBounds(this.xIdx * size, this.yIdx * size, size, size);
+        this.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
         this.setOpaque(true);
-        
     }
 
     @Override
@@ -30,13 +32,27 @@ public class Cell extends JComponent {
         graphics.fillRect(0, 0, this.size, this.size);
     }
 
+    /* getter */
     public int getVal() {
         return this.val;
     }
 
-    public void setNewValues(int newVal, Color newColour) {
+    public boolean getPlayer() {
+        return this.player;
+    }
+
+    /* setter */
+    public void setVal(int newVal) {
         this.val = newVal;
-        this.colour = newColour;
-        this.repaint();
+    }
+
+    public void setPlayer(boolean isPlayer) {
+        this.player = isPlayer;
+
+        if (this.player) {
+            colour = new Color(236, 189, 0);
+        } else {
+            colour = new Color(66, 66, 66);
+        }
     }
 }

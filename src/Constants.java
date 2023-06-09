@@ -1,5 +1,3 @@
-package utils;
-
 import java.awt.Color;
 
 public class Constants {
@@ -16,6 +14,7 @@ public class Constants {
     public static final int CELLS_IN_COL = WINDOW_HEIGHT / CELL_SIZE;
 
     public static final Color LB_BACKGROUND = new Color(211, 211, 211);
+    public static final Color BORDER_COLOUR = new Color(200, 200, 200);
     
     public static final Color WALL_CELL_COLOUR = new Color(66, 66, 66);
 
