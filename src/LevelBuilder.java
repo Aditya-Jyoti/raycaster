@@ -15,6 +15,7 @@ import java.awt.geom.Line2D;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -158,7 +159,6 @@ public class LevelBuilder extends JFrame {
     }
 
     private void writeGameBoardJSON() {
-        JSONObject gameBoardJSON = new JSONObject();
 
         List<List<Integer>> newBoard = new ArrayList<List<Integer>>();
 
@@ -175,7 +175,11 @@ public class LevelBuilder extends JFrame {
             newBoard.add(newRow);
         }
 
-        gameBoardJSON.put("gameBoard", newBoard);
+        JSONObject gameBoardJSON = new JSONObject(new HashMap<String, List<List<Integer>>>() {
+            {
+                put("gameBoard", newBoard);
+            }
+        });
 
         try (FileWriter file = new FileWriter("gameBoard.json")) {
             file.write(gameBoardJSON.toJSONString());
