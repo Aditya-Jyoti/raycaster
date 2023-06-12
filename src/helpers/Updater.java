@@ -1,16 +1,19 @@
-package utils;
+package helpers;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class Updater extends Thread {
     public static final double FPS = 60.0;
     public static final double MS_PER_FPS = 1000.0 / FPS;
 
     private JFrame frame;
+    private JPanel levelBuilder;
     private boolean running = true;
 
-    public Updater(JFrame frame) {
+    public Updater(JFrame frame, JPanel levelBuilder) {
         this.frame = frame;
+        this.levelBuilder = levelBuilder;
     }
 
     public void setRunning(boolean isRunning) {
@@ -27,6 +30,7 @@ public class Updater extends Thread {
 
             if (timeSinceLastFPSUpdate >= MS_PER_FPS) {
                 this.frame.repaint();
+                this.levelBuilder.repaint();
                 lastFPSUpdate = currTime;
                 timeSinceLastFPSUpdate = 0L;
             }
