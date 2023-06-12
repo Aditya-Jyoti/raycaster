@@ -9,11 +9,13 @@ public class Updater extends Thread {
 
     private JFrame frame;
     private JPanel levelBuilder;
+    private JPanel raycaster;
     private boolean running = true;
 
-    public Updater(JFrame frame, JPanel levelBuilder) {
+    public Updater(JFrame frame, JPanel levelBuilder, JPanel raycaster) {
         this.frame = frame;
         this.levelBuilder = levelBuilder;
+        this.raycaster = raycaster;
     }
 
     public void setRunning(boolean isRunning) {
@@ -31,6 +33,7 @@ public class Updater extends Thread {
             if (timeSinceLastFPSUpdate >= MS_PER_FPS) {
                 this.frame.repaint();
                 this.levelBuilder.repaint();
+                this.raycaster.repaint();;
                 lastFPSUpdate = currTime;
                 timeSinceLastFPSUpdate = 0L;
             }

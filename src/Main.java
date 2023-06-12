@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import helpers.Constants;
-import helpers.JSONReadWrite;
 import helpers.Updater;
 import scenes.LevelBuilder;
 import scenes.Raycaster;
@@ -18,10 +17,10 @@ public class Main extends JFrame {
     private boolean isLevelBuilderVisible = true;
 
     public Main() {
-        super("RayCaster");
+        super("level builder");
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setIconImage(new ImageIcon("assets/main.png").getImage());
+        setIconImage(new ImageIcon("assets/level-builder-logo.png").getImage());
 
         CardLayout layout = new CardLayout();
         setLayout(layout);
@@ -35,7 +34,7 @@ public class Main extends JFrame {
         Raycaster raycaster = new Raycaster();
         add(raycaster, "raycaster");
 
-        Updater updater = new Updater(this, levelBuilder);
+        Updater updater = new Updater(this, levelBuilder, raycaster);
         updater.start();
         addWindowListener(new WindowAdapter() {
             @Override
@@ -49,14 +48,20 @@ public class Main extends JFrame {
             public void keyPressed(KeyEvent event) {
                 if (event.getKeyCode() == 10) {
                     if (isLevelBuilderVisible) {
-                        JSONReadWrite jsonWriter = new JSONReadWrite(levelBuilder.getGameBoard());
-                        jsonWriter.writeGameBoardJSON();
                         isLevelBuilderVisible = false;
+                        setTitle("Raycaster");
+                        setIconImage(new ImageIcon("assets/main-logo.png").getImage());
+                        raycaster.setGameBoard(levelBuilder.getGameBoard());
+                        raycaster.update();
                         layout.show(getContentPane(), "raycaster");
 
                     } else {
-                        layout.show(getContentPane(), "levelBuilder");
                         isLevelBuilderVisible = true;
+                        setTitle("Level Builder");
+                        setIconImage(new ImageIcon("assets/level-builder-logo.png").getImage());
+                        levelBuilder.setGameBoard(raycaster.getGameBoard());
+                        levelBuilder.update();
+                        layout.show(getContentPane(), "levelBuilder");
                     }
                 }
             }

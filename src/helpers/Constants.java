@@ -1,4 +1,5 @@
 package helpers;
+
 import java.awt.Color;
 
 public class Constants {
@@ -18,5 +19,7 @@ public class Constants {
 
     public static final Color BORDER_COLOUR = new Color(200, 200, 200);
     public static final Color WALL_CELL_COLOUR = new Color(66, 66, 66);
+
+    public static final Color PLAYER_COLOUR = new Color(236, 189, 0);
 
 }

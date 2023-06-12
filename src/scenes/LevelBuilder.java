@@ -1,12 +1,9 @@
 package scenes;
+
 import utils.Cell;
 
-import java.awt.BasicStroke;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,22 +39,26 @@ public class LevelBuilder extends JPanel {
                 if (event.getButton() == MouseEvent.BUTTON1) {
                     if (gameBoard.get(mouseYIdx).get(mouseXIdx).getVal() == -1) {
                         gameBoard.get(mouseYIdx).get(mouseXIdx).setVal(1);
+                        gameBoard.get(mouseYIdx).get(mouseXIdx).setColour(Constants.WALL_CELL_COLOUR);
                         add(gameBoard.get(mouseYIdx).get(mouseXIdx));
 
                     } else {
                         gameBoard.get(mouseYIdx).get(mouseXIdx).setVal(-1);
+                        gameBoard.get(mouseYIdx).get(mouseXIdx).setColour(Constants.LB_BACKGROUND);
                         remove(gameBoard.get(mouseYIdx).get(mouseXIdx));
                     }
 
                 } else if (event.getButton() == MouseEvent.BUTTON3) {
-                    if (!gameBoard.get(mouseYIdx).get(mouseXIdx).getPlayer() && !hasPlayer) {
+                    if (!(gameBoard.get(mouseYIdx).get(mouseXIdx).getVal() == 0) && !hasPlayer) {
                         hasPlayer = true;
-                        gameBoard.get(mouseYIdx).get(mouseXIdx).setPlayer(true);
+                        gameBoard.get(mouseYIdx).get(mouseXIdx).setVal(0);
+                        gameBoard.get(mouseYIdx).get(mouseXIdx).setColour(Constants.PLAYER_COLOUR);
                         add(gameBoard.get(mouseYIdx).get(mouseXIdx));
 
-                    } else {
+                    } else if (gameBoard.get(mouseYIdx).get(mouseXIdx).getVal() == 0 && hasPlayer) {
                         hasPlayer = false;
-                        gameBoard.get(mouseYIdx).get(mouseXIdx).setPlayer(false);
+                        gameBoard.get(mouseYIdx).get(mouseXIdx).setVal(-1);
+                        gameBoard.get(mouseYIdx).get(mouseXIdx).setColour(Constants.LB_BACKGROUND);
                         remove(gameBoard.get(mouseYIdx).get(mouseXIdx));
                     }
                 }
@@ -75,29 +76,6 @@ public class LevelBuilder extends JPanel {
             public void mouseExited(MouseEvent event) {
             }
         });
-        setVisible(true);
-    }
-
-    @Override
-    protected void paintComponent(Graphics graphics) {
-        super.paintComponent(graphics);
-        drawGrid(graphics);
-    }
-
-    private void drawGrid(Graphics graphics) {
-        Graphics2D graphics2d = (Graphics2D) graphics;
-        graphics2d.setStroke(new BasicStroke(2));
-        graphics2d.setColor(Constants.BORDER_COLOUR);
-
-        for (int horLine = 0; horLine < Constants.CELLS_IN_COL; horLine++) {
-            graphics2d.draw(new Line2D.Float(0, Constants.CELL_SIZE * horLine, Constants.WINDOW_WIDTH,
-                    Constants.CELL_SIZE * horLine));
-        }
-
-        for (int verLine = 0; verLine < Constants.CELLS_IN_ROW; verLine++) {
-            graphics2d.draw(new Line2D.Float(Constants.CELL_SIZE * verLine, 0, Constants.CELL_SIZE * verLine,
-                    Constants.WINDOW_HEIGHT));
-        }
     }
 
     private void drawGameBoard() {
@@ -108,11 +86,37 @@ public class LevelBuilder extends JPanel {
             }
             gameBoard.add(cellRow);
         }
+        displayGameBoard();
+    }
+
+    private void displayGameBoard() {
+        for (List<Cell> row : this.gameBoard) {
+            for (Cell cell : row) {
+                if (cell.getVal() == -1) {
+                    cell.setColour(Constants.LB_BACKGROUND);
+                } else if (cell.getVal() == 0) {
+                    cell.setColour(Constants.PLAYER_COLOUR);
+                } else {
+                    cell.setColour(Constants.WALL_CELL_COLOUR);
+                }
+                add(cell);
+            }
+        }
     }
 
     /* getter */
-
     public List<List<Cell>> getGameBoard() {
         return this.gameBoard;
+    }
+
+    /* setter */
+    public void setGameBoard(List<List<Cell>> newGameBoard) {
+        this.gameBoard = newGameBoard;
+    }
+
+    /* update display */
+    public void update() {
+        displayGameBoard();
+        repaint();
     }
 }
