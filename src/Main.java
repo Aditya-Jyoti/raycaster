@@ -63,6 +63,21 @@ public class Main extends JFrame {
                         levelBuilder.update();
                         layout.show(getContentPane(), "levelBuilder");
                     }
+
+                } else if (!isLevelBuilderVisible) {
+                    if (event.getKeyCode() == 87) {
+                        // up
+                        raycaster.setPlayerYPos(raycaster.getPlayerYPos() - Constants.PLAYER_SPEED);
+                    } else if (event.getKeyCode() == 65) {
+                        // left
+                        raycaster.setPlayerXPos(raycaster.getPlayerXPos() - Constants.PLAYER_SPEED);
+                    } else if (event.getKeyCode() == 83) {
+                        // down
+                        raycaster.setPlayerYPos(raycaster.getPlayerYPos() + Constants.PLAYER_SPEED);
+                    } else if (event.getKeyCode() == 68) {
+                        // right
+                        raycaster.setPlayerXPos(raycaster.getPlayerXPos() + Constants.PLAYER_SPEED);
+                    }
                 }
             }
 

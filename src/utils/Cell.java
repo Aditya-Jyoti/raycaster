@@ -38,6 +38,14 @@ public class Cell extends JComponent {
         return this.val;
     }
 
+    public int getXIdx() {
+        return this.xIdx;
+    }
+
+    public int getYIdx() {
+        return this.yIdx;
+    }
+
     /* setter */
     public void setVal(int newVal) {
         this.val = newVal;
