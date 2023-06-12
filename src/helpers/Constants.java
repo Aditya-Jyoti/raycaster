@@ -1,8 +1,8 @@
+package helpers;
 import java.awt.Color;
 
 public class Constants {
     private Constants() {
-
     }
 
     public static final int WINDOW_WIDTH = 800;

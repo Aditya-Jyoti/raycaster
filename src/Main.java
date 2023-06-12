@@ -8,8 +8,11 @@ import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import helpers.Constants;
 import helpers.JSONReadWrite;
 import helpers.Updater;
+import scenes.LevelBuilder;
+import scenes.Raycaster;
 
 public class Main extends JFrame {
     private boolean isLevelBuilderVisible = true;

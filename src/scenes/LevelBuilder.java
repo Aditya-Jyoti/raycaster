@@ -1,3 +1,4 @@
+package scenes;
 import utils.Cell;
 
 import java.awt.BasicStroke;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
+
+import helpers.Constants;
 
 public class LevelBuilder extends JPanel {
     private int mouseXIdx = 0;
