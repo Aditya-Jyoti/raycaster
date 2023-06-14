@@ -22,6 +22,6 @@ public class Constants {
 
     public static final Color PLAYER_COLOUR = new Color(236, 189, 0);
 
-    public static final int PLAYER_SPEED = 5;
+    public static final int PLAYER_SPEED = 7;
 
 }

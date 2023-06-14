@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -12,9 +13,11 @@ import helpers.Constants;
 import helpers.Updater;
 import scenes.LevelBuilder;
 import scenes.Raycaster;
+import utils.Cell;
 
 public class Main extends JFrame {
     private boolean isLevelBuilderVisible = true;
+    private List<List<Cell>> gameBoard;
 
     public Main() {
         super("level builder");
@@ -51,7 +54,9 @@ public class Main extends JFrame {
                         isLevelBuilderVisible = false;
                         setTitle("Raycaster");
                         setIconImage(new ImageIcon("assets/main-logo.png").getImage());
-                        raycaster.setGameBoard(levelBuilder.getGameBoard());
+
+                        gameBoard = levelBuilder.getGameBoard();
+                        raycaster.setGameBoard(gameBoard);
                         raycaster.update();
                         layout.show(getContentPane(), "raycaster");
 
@@ -59,7 +64,9 @@ public class Main extends JFrame {
                         isLevelBuilderVisible = true;
                         setTitle("Level Builder");
                         setIconImage(new ImageIcon("assets/level-builder-logo.png").getImage());
-                        levelBuilder.setGameBoard(raycaster.getGameBoard());
+
+                        gameBoard = raycaster.getGameBoard();
+                        levelBuilder.setGameBoard(gameBoard);
                         levelBuilder.update();
                         layout.show(getContentPane(), "levelBuilder");
                     }
@@ -67,7 +74,14 @@ public class Main extends JFrame {
                 } else if (!isLevelBuilderVisible) {
                     if (event.getKeyCode() == 87) {
                         // up
-                        raycaster.setPlayerYPos(raycaster.getPlayerYPos() - Constants.PLAYER_SPEED);
+                        double newX = raycaster.getPlayerXPos()
+                                + (Constants.PLAYER_SPEED * Math.cos(raycaster.getPlayerAngle()));
+                        double newY = raycaster.getPlayerYPos()
+                                + (Constants.PLAYER_SPEED * Math.sin(raycaster.getPlayerAngle()));
+
+                        raycaster.setPlayerXPos(newX);
+                        raycaster.setPlayerYPos(newY);
+
                     } else if (event.getKeyCode() == 65) {
                         // left
                         raycaster.setPlayerXPos(raycaster.getPlayerXPos() - Constants.PLAYER_SPEED);
