@@ -82,6 +82,10 @@ public class LevelBuilder extends JPanel {
         for (int yIdx = 0; yIdx < Constants.CELLS_IN_COL; yIdx++) {
             List<Cell> cellRow = new ArrayList<>();
             for (int xIdx = 0; xIdx < Constants.CELLS_IN_ROW; xIdx++) {
+                if (yIdx == 0 || yIdx == Constants.CELLS_IN_COL - 1 || xIdx == 0 || xIdx == Constants.CELLS_IN_ROW - 1) {
+                    cellRow.add(new Cell(xIdx, yIdx, Constants.CELL_SIZE, 1));
+                    continue;
+                }
                 cellRow.add(new Cell(xIdx, yIdx, Constants.CELL_SIZE, -1));
             }
             gameBoard.add(cellRow);

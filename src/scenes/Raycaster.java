@@ -27,6 +27,7 @@ public class Raycaster extends JPanel {
                 double height = event.getY() - player.getYPos();
                 double angle = Math.atan2(height, base); // radians
                 player.setAngle(angle);
+                player.updateRays();
             }
 
             public void mouseDragged(MouseEvent event) {
@@ -40,6 +41,7 @@ public class Raycaster extends JPanel {
                 if (cell.getVal() == 0) {
                     this.player = new Player(cell.getXIdx(), cell.getYIdx());
                     add(this.player);
+
                 } else if (cell.getVal() == 1) {
                     cell.setColour(Constants.WALL_CELL_COLOUR);
                     add(cell);

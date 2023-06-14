@@ -81,13 +81,23 @@ public class Main extends JFrame {
 
                         raycaster.setPlayerXPos(newX);
                         raycaster.setPlayerYPos(newY);
+                        raycaster.getPlayer().updateRays();
 
                     } else if (event.getKeyCode() == 65) {
                         // left
                         raycaster.setPlayerXPos(raycaster.getPlayerXPos() - Constants.PLAYER_SPEED);
+
                     } else if (event.getKeyCode() == 83) {
                         // down
-                        raycaster.setPlayerYPos(raycaster.getPlayerYPos() + Constants.PLAYER_SPEED);
+                        double newX = raycaster.getPlayerXPos()
+                                - (Constants.PLAYER_SPEED * Math.cos(raycaster.getPlayerAngle()));
+                        double newY = raycaster.getPlayerYPos()
+                                - (Constants.PLAYER_SPEED * Math.sin(raycaster.getPlayerAngle()));
+
+                        raycaster.setPlayerXPos(newX);
+                        raycaster.setPlayerYPos(newY);
+                        raycaster.getPlayer().updateRays();
+
                     } else if (event.getKeyCode() == 68) {
                         // right
                         raycaster.setPlayerXPos(raycaster.getPlayerXPos() + Constants.PLAYER_SPEED);
