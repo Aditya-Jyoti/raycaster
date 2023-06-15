@@ -24,3 +24,5 @@ replay_pid*
 
 # extra
 gameBoard.json
+.VSCodeCounter
+.vscode
