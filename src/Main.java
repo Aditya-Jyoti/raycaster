@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -50,6 +51,7 @@ public class Main extends JFrame {
             @Override
             public void keyPressed(KeyEvent event) {
                 if (event.getKeyCode() == 10) {
+                    // enter key
                     if (isLevelBuilderVisible) {
                         isLevelBuilderVisible = false;
                         setTitle("Raycaster");
@@ -79,6 +81,17 @@ public class Main extends JFrame {
                         double newY = raycaster.getPlayerYPos()
                                 + (Constants.PLAYER_SPEED * Math.sin(raycaster.getPlayerAngle()));
 
+                        HashMap<String, Integer> indexMap = raycaster.getPlayer().updateIndices(newX, newY);
+                        
+                        if (gameBoard.get(indexMap.get("yIdx") - 1).get(indexMap.get("xIdx") - 1).getVal() == 1 ||
+                            gameBoard.get(indexMap.get("yIdx") + 1).get(indexMap.get("xIdx") + 1).getVal() == 1) {
+
+                            raycaster.setPlayerXPos(raycaster.getPlayerXPos());
+                            raycaster.setPlayerYPos(raycaster.getPlayerYPos());
+                            return;
+
+                        }
+
                         raycaster.setPlayerXPos(newX);
                         raycaster.setPlayerYPos(newY);
                         raycaster.getPlayer().updateRays();
@@ -93,6 +106,17 @@ public class Main extends JFrame {
                                 - (Constants.PLAYER_SPEED * Math.cos(raycaster.getPlayerAngle()));
                         double newY = raycaster.getPlayerYPos()
                                 - (Constants.PLAYER_SPEED * Math.sin(raycaster.getPlayerAngle()));
+
+                        HashMap<String, Integer> indexMap = raycaster.getPlayer().updateIndices(newX, newY);
+
+                        if (gameBoard.get(indexMap.get("yIdx") - 1).get(indexMap.get("xIdx") - 1).getVal() == 1 ||
+                                gameBoard.get(indexMap.get("yIdx") + 1).get(indexMap.get("xIdx") + 1).getVal() == 1) {
+
+                            raycaster.setPlayerXPos(raycaster.getPlayerXPos());
+                            raycaster.setPlayerYPos(raycaster.getPlayerYPos());
+                            return;
+
+                        }
 
                         raycaster.setPlayerXPos(newX);
                         raycaster.setPlayerYPos(newY);
